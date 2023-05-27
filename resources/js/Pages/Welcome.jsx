@@ -133,7 +133,7 @@ export default function Welcome(props) {
             </nav>
             <div className="w-full h-full bg-gray-800 py-5">
                 <div className='grid justify-center'>
-                    <h1 className='text-gray-300 font-bold text-5xl font-sans my-10 '>Current Week</h1>
+                    <h1 className='text-gray-300 font-bold text-5xl font-sans my-10 '>Seances</h1>
                     <div className={props.movies.length != 5 ? `grid justify-center min-w-max lg:grid-cols-2 xl:grid-cols-${props.movies.length} 2xl:grid-cols-${props.movies.length} gap-5 w-10/12` : `grid h-screen justify-center min-w-max lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-5 w-10/12`}>
                         {Object.values(props.movies).map((movie) => (
                             <MovieSection setSeance={setSeance} key={movie.id} movie={movie} halls={props.halls} />

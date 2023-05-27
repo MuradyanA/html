@@ -44,6 +44,12 @@ export default function MovieSection({ movie, halls, setSeance }) {
                         </React.Fragment>
                     ))}
                 </table>
+                        {/* <select>
+                            {movie.seances.map((elem)=>(
+
+                            ))}
+                        </select> */}
+                    
             </div>
             }
             <div className="z-10 w-72 h-fit bg-gray-600 rounded-md">

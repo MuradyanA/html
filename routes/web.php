@@ -43,6 +43,7 @@ Route::get('/downloadTicket', [PaymentController::class, 'downloadTicket'])->nam
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware(['auth', 'verified']);
+Route::put('/dashboard/{payment}', [DashboardController::class, 'checkPayment'])->name('dashboard.checkPayment');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

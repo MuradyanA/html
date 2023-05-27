@@ -10,7 +10,6 @@ export default function Createseances(props) {
   //   movieSearch:''
   // })
   const [movieSearch, setMovieSearch] = useState('')
-
   const { data, setData, post, get, processing, errors, reset } = useForm({
     sunday: false,
     monday: false,
@@ -23,6 +22,7 @@ export default function Createseances(props) {
     movie_id: '',
     hall_id: '',
     starts: '',
+    ends: '',
     parter_price: 0.0,
     amphitheater_price: 0.0
   })
@@ -47,6 +47,7 @@ export default function Createseances(props) {
         only: ['movies'],
         method: 'get',
         data: { search: keyword },
+        onError: (e) => console.log(e),
         preserveState: true
       })
   }, 800)
@@ -91,6 +92,8 @@ export default function Createseances(props) {
             </div>
             <p className='text-white'>Starts</p>
             <input className='w-80 h-10 rounded-md border-1 bg-[#0a101e] text-white border-[#2c3c5f]' value={data.starts} onChange={e => setData('starts', e.target.value)} type="date" />
+            <p className='text-white'>Ends</p>
+            <input className='w-80 h-10 rounded-md border-1 bg-[#0a101e] text-white border-[#2c3c5f]' value={data.ends} onChange={e => setData('ends', e.target.value)} type="date" />
             <p className='text-white'>Halls</p>
             <label className='text-gray-400 font-bold'><input value={1} type="radio" onChange={() => setData('hall_id', 1)} />&nbsp;Red</label>
             <label className='text-gray-400 font-bold'><input value={2} type="radio" onChange={() => setData('hall_id', 2)} />&nbsp;Blue</label>
@@ -101,7 +104,7 @@ export default function Createseances(props) {
             <div className='flex justify-center mt-4'>
               <button type='submit' className='text-white py-1 px-5 rounded-md bg-green-600'>Create</button>
             </div>
-            {Object.keys(errors).length > 0 && <div className={`${Object.keys(errors).length > 0 ? 'h-auto transition-all duration-1000 ease-in-out ' : 'h-0 overflow-hidden'} grid place-content-center w-full bg-red-500 mt-4 py-5 rounded-md`}
+            {Object.keys(errors).length > 0 && <div className={`${Object.keys(errors).length > 0 ? 'h-auto transition-all duration-1000 ease-in-out p-3' : 'h-0 overflow-hidden'} grid place-content-center w-full bg-red-500 mt-4 py-5 rounded-md`}
             >
               {Object.keys(errors) && <div className='messageBox'>
                 <ul>{Object.keys(errors).map((key) => (

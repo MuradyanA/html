@@ -37,6 +37,7 @@ class WelcomeController extends Controller
                     ['seance_date', '=', Carbon::now()->endOfWeek($seance['weekday'])->format('y-m-d')],
                     ['seance_time', '=', $seance['hour']],
                     ['hall_id', '=', $seance['hall_id']],
+                    ['status', '!=', 'cancelled']
                 ]
             )->get()->pluck('seat');
             $responseData['chosenSeance'] = Seance::select('weekDay', 'hour', 'movie_id', 'hall_id', 'parter_price', 'amphitheater_price')->where('id', $request->session()->get('seance_id'))->first();

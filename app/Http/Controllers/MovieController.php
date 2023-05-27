@@ -26,7 +26,6 @@ class MovieController extends Controller
         $validated = $request->validate([
             'id' => [new CheckMovie]
         ]);
-        dd($validated);
         $movieTable = DB::table('movies')
             ->where('id', '=', $request->id)
             ->delete();

@@ -23,13 +23,21 @@ class Seance extends Model
         return $this->belongsTo(Hall::class);
     }
 
-    static function getActualSeances(Carbon $date)
+    static function getActualSeances(Carbon $date, $hallId = null, $weekDay = null)
     {
         $moviestable = DB::table('movies')->select(DB::raw('id as movieId, movieName'));
         $firstTable = self::select(DB::raw('weekday, hour, MAX(created_at) as created_at'))
             ->where('starts', '<=', $date)
             ->groupBy('weekday', 'hour');
 
+        if(!is_null($hallId)){
+            $firstTable->where('hall_id', $hallId);
+        }
+
+        if(!is_null($weekDay)){
+            $firstTable->where('weekday', $weekDay);
+        }
+            
         $secondTable = self::joinSub($firstTable, 'firstTable', function (JoinClause $join) {
             $join->on('firstTable.weekday', '=', 'seances.weekday');
             $join->on('firstTable.hour', '=', 'seances.hour');
