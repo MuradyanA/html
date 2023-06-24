@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Seance;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -39,8 +40,9 @@ class SeanceController extends Controller
         $data['seances'] = $seances;
         return inertia::render('Seances', $data);
     }
-    public function create(Request $request)
+    public function create(Request $request, User $user)
     {
+        $this->authorize('create', $user);
         //dd($request->query('search'));
         $queryString = $request->query('search');
         if ($queryString) {
@@ -74,6 +76,7 @@ class SeanceController extends Controller
 
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'sunday' => 'required|boolean',
             'monday' => 'required|boolean',

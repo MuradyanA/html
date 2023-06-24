@@ -15,6 +15,11 @@ use App\Rules\CheckMovie;
 class MovieController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->authorizeResource(Movie::class, 'movie');
+    }
+
     public function index(Request $request)
     {
         $movies = DB::table('movies')->simplePaginate(4);
@@ -64,8 +69,13 @@ class MovieController extends Controller
 
     }
 
+    public function create(){
+        return Inertia::render('Createmovies');
+    }
+
     public function store(Request $request, Movie $movie)
     {
+        // $this->authorize('create', $user);
         // Storage::disk('local')->append('moviesInfo.txt', $request->movieName);
         echo asset('storage/moviesInfo.txt');
         $validated = $request->validate([

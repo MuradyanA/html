@@ -13,15 +13,48 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
+
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
+
+     public function __construct()
+     {
+         $this->authorizeResource(User::class, 'user');
+     }
+
+    public function index(Request $request){
+        $users = DB::table('users')->selectRaw('id, status, isAdmin, name, email, created_at');
+        
+        if ($request->query('search')) {
+            $query = $request->query('search');
+            $users->where('name', 'like', "%$query%");
+        }
+        ;
+
+        if ($request->query('search')) {
+            return Inertia::render('Users', ['users' => $users->simplePaginate(5)->appends(['search' => $request->query('search')])]);
+        } else {
+            return Inertia::render('Users', [
+                'users' => $users->simplePaginate(4),
+            ]);
+        }
+    }
+
     public function create(): Response
     {
         return Inertia::render('Auth/Register');
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $user->status = !$user->status;
+        $user->save();
+        return to_route('users.index');
     }
 
     /**
@@ -36,7 +69,6 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -45,8 +77,14 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        return to_route('users.index');
     }
+
+    public function changeUserRole(Request $request, User $user)
+    {
+        $user->isAdmin = !$user->isAdmin;
+        $user->save();
+        return to_route('users.index');
+    }
+
 }

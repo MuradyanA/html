@@ -25,15 +25,15 @@ export default function AllMovies({ auth, data, next_page_url, prev_page_url, er
       auth={auth}
       errors={errors}
       header={<h2 className="font-semibold text-xl text-white leading-tight">Movies</h2>}
-      navbarLinks={[{ to: '/movies/create', name: 'Create New Movie', active: false }, { to: '/movies', name: 'All Movies', active: true }]}
+      navbarLinks={auth.user.isAdmin ? [{ to: '/movies/create', name: 'Create New Movie', active: false }, { to: '/movies', name: 'All Movies', active: true }] : [{ to: '/movies', name: 'All Movies', active: true }]}
     >
       <Head title="All Movies" />
 
       {deleteErrors && <div ref={errorWindow} className='m-auto drop-shadow-3xl rounded-md bg-red-700 h-20 w-fit p-5 mt-5 transition-opacity opacity-100 delay-150 duration-1000'><p className='text-white text-2xl'>{deleteErrors.id}</p></div>}
       <div className='flex justify-center p-5'>
-        <div className='grid grid-cols-4 grid-rows-1 justify-items-center'>
+        <div className='grid gap-5 lg:grid-cols-4 md:grid-cols-2 md:grid-rows-2 justify-items-center'>
           {data && data.map((elem) => (
-            <MovieBox setDeleteErrors={setDeleteErrors} key={elem.id} data={elem} errors={errors} />
+            <MovieBox auth={auth} setDeleteErrors={setDeleteErrors} key={elem.id} data={elem} errors={errors} />
           ))}
         </div>
       </div>

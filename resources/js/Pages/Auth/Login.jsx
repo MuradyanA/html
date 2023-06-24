@@ -5,15 +5,17 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
-export default function Login({ status, canResetPassword }) {
+
+export default function Login(props, { status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
         remember: '',
     });
-
+    const { flash } = usePage().props
+    console.log(props)
     useEffect(() => {
         return () => {
             reset('password');
@@ -36,7 +38,7 @@ export default function Login({ status, canResetPassword }) {
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
-            <form  onSubmit={submit}>
+            <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
 
@@ -73,7 +75,7 @@ export default function Login({ status, canResetPassword }) {
                 <div className="block mt-4">
                     <label className="flex items-center">
                         <Checkbox name="remember" value={data.remember} onChange={handleOnChange} />
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                        <span className="ml-2 text-sm text-gray-500">Remember me</span>
                     </label>
                 </div>
 
@@ -92,6 +94,11 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
+                    {flash.message && (
+                        <p className='text-red-600 mt-5'>
+                            {flash.message}
+                        </p>
+                    )}
         </GuestLayout>
     );
 }

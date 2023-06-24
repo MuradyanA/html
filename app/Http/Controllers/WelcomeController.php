@@ -71,7 +71,12 @@ class WelcomeController extends Controller
         $validated = $request->validate([
             'seats.*.id' => 'exists:seats,id'
         ]);
-        $request->session()->put('seats', Arr::flatten($validated['seats']));
+        if(array_key_exists('seats', $validated)){
+            $request->session()->put('seats', Arr::flatten($validated['seats']));
+        }else{
+            $request->session()->forget('seats');
+        }
+        // dd($request->session());
 
         return to_route('welcome.index');
     }

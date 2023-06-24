@@ -10,12 +10,12 @@ export default forwardRef(function TextInput({ type = 'text', className = '', is
     }, []);
 
     return (
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start bg-[#0a101e]">
             <input
                 {...props}
                 type={type}
                 className={
-                    'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm ' +
+                    ' focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm text-gray-400 border-[#2c3c5f] bg-[#0a101e] font-bold' +
                     className
                 }
                 ref={input}

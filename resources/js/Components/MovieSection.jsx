@@ -17,7 +17,7 @@ export default function MovieSection({ movie, halls, setSeance }) {
         setActive(false);
     };
     return (
-        <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} className='group shadow-lg shadow-neutral-400/20'>
+        <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} className='h-fit group shadow-lg shadow-neutral-400/20 '>
             {active && <div
                 className={active ?
                     " w-72 h-0 absolute group-hover:h-96 z-20 transition-all duration-200" :

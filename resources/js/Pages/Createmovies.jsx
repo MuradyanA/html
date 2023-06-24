@@ -28,8 +28,8 @@ export default function Createmovies(props) {
       header={<h2 className="font-semibold text-xl text-white leading-tight">Create Movie</h2>}
       navbarLinks={[{to:'/movies/create', name:'Create New Movie', active:true}, {to:'/movies', name:'All Movies', active:false}]}
     >
-      <form className='grid place-content-center w-full' onSubmit={handleUploadMovie}>
-        <div className=' grid place-content-center bg-[#111827] translate-y-10 p-5 flex-col items-center drop-shadow-2xl rounded-xl'>
+      <form className='w-full grid place-content-center' onSubmit={handleUploadMovie}>
+        <div className='w-full sm:w-full lg:w-full grid place-content-center bg-[#111827] translate-y-10 p-5 flex-col items-center drop-shadow-2xl rounded-xl'>
           <h3 className='text-3xl mb-7 m-auto text-white'>New Movie</h3>
           <hr className='mb-6' />
           <p className='text-white'>Movie Name</p>

@@ -52,12 +52,11 @@ class DashboardController extends Controller
         if ($request->query('search')) {
             $query = $request->query('search');
             $payments->where('name', 'like', "%$query%");
-
         }
         ;
 
         if ($request->query('search')) {
-            return Inertia::render('Dashboard', ['payments' => $payments->simplePaginate(5)->appends(['search' => $request->query('search')])]);
+            return Inertia::render('Dashboard', ['payments' => $payments->simplePaginate(5)->appends(['search' => $request->query('search')]), 'statistics' => fn() => $this->getStatistics()]);
         } else {
             return Inertia::render('Dashboard', [
                 'payments' => $payments->simplePaginate(5),
@@ -70,7 +69,6 @@ class DashboardController extends Controller
     public function checkPayment(Payment $payment)
     {
         if ($payment->status == 'cancelled') {
-            return to_route('dashboard.index');
         }
 
         if (Ticket::where([['payment_id', $payment->id], ['is_used', 1]])->exists()) {
@@ -80,7 +78,6 @@ class DashboardController extends Controller
             $payment->save();
             Ticket::where('payment_id', $payment->id)->update(['status' => 'cancelled']);
         }
-
         return to_route('dashboard.index');
 
     }

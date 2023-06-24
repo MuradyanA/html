@@ -7,7 +7,6 @@ import { animationScenario2, animateElem } from '../animate.js'
 
 
 export default function MovieBox(props) {
-
     const { data, setData, post, errors, delete: destroy } = useForm({
         id: props.data.id,
         movieName: props.data.movieName,
@@ -54,10 +53,10 @@ export default function MovieBox(props) {
 
     return (
 
-        <div className='grid drop-shadow-2xl mt-5'>
-            <div className='group grid place-content-start relative' onMouseOver={handleMouseOver}
+        <div className='grid drop-shadow-2xl mt-5 max-w-full overflow-hidden'>
+            <div className='grid place-content-start max-w-xl' onMouseOver={handleMouseOver}
                 onMouseOut={handleMouseOut}>
-                {!updateMovie && <div
+                {!updateMovie && props.auth.user.isAdmin==1 && <div
                     className={active ? "bg-[#2a3c67] rounded-sm w-20 absolute group:hover h-96 transition-all translate-x-5 ease-out duration-300  grid place-content-center opacity-80 top-0 left-0  overflow-hidden" :
                         "grid place-content-center w-20 absolute translate-x-5 opacity-75 h-0 overflow-hidden bg-[#0a101e] top-0 left-0 "
                     }>
@@ -73,8 +72,8 @@ export default function MovieBox(props) {
                     </button>
                 </div>
                 }
-                <img src={props.data.poster} className="w-3/4 h-fit" />
-                <div className='grid bg-[#111827] p-2 w-3/4 top-0'>
+                <img src={props.data.poster} className="w-full" />
+                <div className='grid bg-[#111827] p-2 w-full top-0'>
                     {updateMovie && <form className='w-full' onSubmit={editMovie}>
                         <div className='flex flex-col items-start'>
                             <input value={data.movieName} className='text-white w-64 bg-[#0a101e] h-10 rounded-md border-1 border-[#2c3c5f]' onChange={e => setData('movieName', e.target.value)} type="text" /><br />

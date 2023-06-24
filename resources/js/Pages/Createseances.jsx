@@ -61,7 +61,7 @@ export default function Createseances(props) {
         header={<h2 className="font-semibold text-xl text-white leading-tight">Create Seance</h2>}
         navbarLinks={[{ to: '/seances', name: 'All Seances', active: false }, { to: '/seances/create', name: 'Create Seances', active: true }]}
       >
-        <form className='grid place-content-center w-full' onSubmit={handleCreateSeance}>
+        <form className='grid place-content-center w-64 sm:w-32 lg:w-full mb-20' onSubmit={handleCreateSeance}>
           <div className='w-96 grid place-content-center bg-[#111827] translate-y-10 p-5 flex-col items-center drop-shadow-2xl rounded-xl'>
             <h3 className='text-3xl m-auto text-white mb-7'>New Seance</h3>
             <hr className='mb-6' />

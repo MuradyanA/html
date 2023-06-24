@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\ProfileController;
@@ -24,7 +25,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -33,6 +33,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index')->middleware('web');
 Route::get('/tickets', [PaymentController::class, 'show'])->name('payment.show');
@@ -59,12 +60,12 @@ Route::get('/hall/{hall}', [HallController::class, 'show'])->name('hall.show');
 
 
 Route::middleware('auth')->group(function () {
-
+    Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
+    Route::put('/users/{user}', [RegisteredUserController::class, 'update'])->name('users.update');
+    Route::put('/users/updateRole/{user}', [RegisteredUserController::class, 'changeUserRole'])->name('users.changeUserRole');
     Route::get('/tickets/pass/{ticket}', [TicketController::class, 'checkTicket'])->name('tickets.checkTicket');
     Route::post('/movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
-    Route::get('/movies/create', function () {
-        return Inertia::render('Createmovies');
-    })->name('movies.create');
+    Route::get('/movies/create',[MovieController::class, 'create'])->name('movies.create');
     Route::post('/movies', [MovieController::class, 'store'])->name('movies.store');
     Route::delete('/movies/{id}', [MovieController::class, 'destroy'])->name('movies.destroy');
     Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');

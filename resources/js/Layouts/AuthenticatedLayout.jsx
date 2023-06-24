@@ -3,10 +3,11 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
 
 export default function Authenticated({ auth, header, children, navbarLinks }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
+    const [triggerSidebar, setTriggerSidebar] = useState(false)
 
     return (
         <div className="min-h-screen bg-[#1f2937]">
@@ -24,6 +25,9 @@ export default function Authenticated({ auth, header, children, navbarLinks }) {
                                 </NavLink>
                                 <NavLink href={route("seances.index")} active={route().current('seances.index')}>
                                     Seances
+                                </NavLink>
+                                <NavLink href={route("users.index")} active={route().current('users.index')}>
+                                    Users
                                 </NavLink>
                             </div>
                         </div>
@@ -123,22 +127,35 @@ export default function Authenticated({ auth, header, children, navbarLinks }) {
             )}
             {/* bg-[#d13e2a] */}
             <main className='grid grid-cols-12 gap-1'>
-                {navbarLinks && <div className='w-full min-h-screen col-span-2 bg-green-400 drop-shadow-xl mt-1'>
-                    <div className='sticky top-1/3 pl-20'>
-                        <ul>
+                {navbarLinks && <div className={triggerSidebar ? 'grid grid-cols-9 w-4 -translate-x-7 lg:w-full min-h-screen col-span-2 sm:col-span-4 lg:col-span-2 bg-green-400 drop-shadow-xl mt-1 z-20 duration-500' :
+                    'grid grid-cols-9 w-52 sm:w-52 sm:static lg:w-full min-h-screen col-span-2 sm:col-span-4 lg:col-span-2 bg-green-400 drop-shadow-xl mt-1 z-20  duration-500'}>
+                    <div className='col-span-8'>
+                        <ul className={'overflow-hidden mt-[100%] sticky top-48 grid pl-[10%]'}>
                             {navbarLinks.map((link) => (
-                                <li className='my-5' key={link.name}>
-                                    <Link className={link.active ? 'text-[#111827] text-2xl font-bold' : 'text-[#111827] text-xl'} href={link.to}>{link.name}</Link>
+                                <li className='my-5 text-md' key={link.name}>
+                                    <Link className={link.active ? 'text-[#111827] text-xl font-bold ' : 'text-[#111827]'} href={link.to}>{link.name}</Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
+                    <div className='col-span-1 grid'>
+                        <div onClick={() => setTriggerSidebar((prev) => !prev)} className='rounded-full w-9 bg-green-600 h-9 overflow-visible sticky top-1/2 mb-[50%] grid content-center justify-items-center sm:hidden md:w-[100%]'>
+                            {triggerSidebar && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-300">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>}
+                            {!triggerSidebar && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-300">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                            </svg>}
+
+                        </div>
+                    </div>
                 </div>
                 }
-                <div className='col-span-10'>
+                <div className='col-span-10 sm:col-span-8 lg:col-span-10'>
                     {children}
                 </div>
             </main>
+            <Footer />
         </div>
     );
 }
