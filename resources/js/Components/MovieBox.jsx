@@ -76,11 +76,11 @@ export default function MovieBox(props) {
                 <div className='grid bg-[#111827] p-2 w-full top-0'>
                     {updateMovie && <form className='w-full' onSubmit={editMovie}>
                         <div className='flex flex-col items-start'>
-                            <input value={data.movieName} className='text-white w-64 bg-[#0a101e] h-10 rounded-md border-1 border-[#2c3c5f]' onChange={e => setData('movieName', e.target.value)} type="text" /><br />
-                            <input value={data.genre} className='bg-[#0a101e] text-white border-[#2c3c5f] w-64 h-10 rounded-md border-1' onChange={e => setData('genre', e.target.value)} type="text" /><br />
-                            <textarea value={data.description} className='bg-[#0a101e] text-white border-[#2c3c5f] w-64 h-20 rounded-md border-1' onChange={e => setData('description', e.target.value)} type="text" /> <br />
-                            <input value={data.realiseDate} className='bg-[#0a101e] text-white border-[#2c3c5f] w-64 h-10 rounded-md border-1' onChange={e => setData('realiseDate', e.target.value)} type="date" /> <br />
-                            <input className='text-white w-64 h-10 rounded-md border-1' onChange={e => setData('image', e.target.files[0])} type="file" /> <br />
+                            <input value={data.movieName} className='text-white w-full bg-[#0a101e] h-10 rounded-md border-1 border-[#2c3c5f]' onChange={e => setData('movieName', e.target.value)} type="text" /><br />
+                            <input value={data.genre} className='bg-[#0a101e] text-white border-[#2c3c5f] w-full h-10 rounded-md border-1' onChange={e => setData('genre', e.target.value)} type="text" /><br />
+                            <textarea value={data.description} className='bg-[#0a101e] text-white border-[#2c3c5f] w-full h-20 rounded-md border-1' onChange={e => setData('description', e.target.value)} type="text" /> <br />
+                            <input value={data.realiseDate} className='bg-[#0a101e] text-white border-[#2c3c5f] w-full h-10 rounded-md border-1' onChange={e => setData('realiseDate', e.target.value)} type="date" /> <br />
+                            <input className='text-white w-full h-10 rounded-md border-1' onChange={e => setData('image', e.target.files[0])} type="file" /> <br />
                         </div>
                         <div className='flex justify-around mb-2'>
                             <button className='bg-red-600 w-20 h-8 rounded text-white hover:bg-red-700 transition-colors delay-150' onClick={() => setUpdateMovie(false)}>Cancel</button>

@@ -181,7 +181,7 @@ export default function Welcome(props) {
                                 className="text-gray-300 mt-5 font-bold text-xl mb-5 flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>&nbsp;
-                                Payment Successfull. Click the button below to download the tickets.
+                                Payment Successful. Click the button below to download the tickets.
                             </h4>
                             <div>
                                 <a href={`/downloadTicket`} className="bg-green-800 w-fit m-auto hover:bg-green-700 hover:border-green-700 text-center border-2  border-green-800 text-white font-bold py-2 px-4 rounded">Download Ticket</a>
