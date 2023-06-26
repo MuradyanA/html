@@ -137,13 +137,13 @@ export default function Authenticated({ auth, header, children, navbarLinks }) {
             )}
             {/* bg-[#d13e2a] */}
             <main className='grid grid-cols-12 gap-1'>
-                {navbarLinks && <div className={triggerSidebar ? 'grid grid-cols-9 w-4 -translate-x-7 lg:w-full min-h-screen col-span-2 sm:col-span-4 lg:col-span-2 bg-green-400 drop-shadow-xl mt-1 z-20 duration-500' :
-                    'grid grid-cols-9 w-52 sm:w-52 sm:static lg:w-full min-h-screen col-span-2 sm:col-span-4 lg:col-span-2 bg-green-400 drop-shadow-xl mt-1 z-20  duration-500'}>
+                {navbarLinks && <div className={triggerSidebar ? 'grid grid-cols-9 w-4 -translate-x-7 lg:w-full min-h-screen md:col-span-2 lg:col-span-2 bg-green-400 drop-shadow-xl mt-1 z-20 duration-500' :
+                    'grid grid-cols-9 w-52 sm:w-52 sm:static lg:w-full min-h-screen sm:col-span-4 lg:col-span-2 bg-green-400 drop-shadow-xl mt-1 z-20  duration-500'}>
                     <div className='col-span-8'>
                         <ul className={'overflow-hidden mt-[100%] sticky top-48 grid pl-[10%]'}>
                             {navbarLinks.map((link) => (
-                                <li className='my-5 text-md' key={link.name}>
-                                    <Link className={link.active ? 'text-[#111827] text-xl font-bold ' : 'text-[#111827]'} href={link.to}>{link.name}</Link>
+                                <li className='my-5 text-lg' key={link.name}>
+                                    <Link className={link.active ? 'text-[#111827] text-2xl font-bold ' : 'text-[#111827]'} href={link.to}>{link.name}</Link>
                                 </li>
                             ))}
                         </ul>
@@ -161,7 +161,7 @@ export default function Authenticated({ auth, header, children, navbarLinks }) {
                     </div>
                 </div>
                 }
-                <div className='col-span-10 sm:col-span-8 lg:col-span-10'>
+                <div className='col-span-11 sm:col-span-10 lg:col-span-10'>
                     {children}
                 </div>
             </main>

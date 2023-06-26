@@ -52,7 +52,7 @@ export default function Users(props) {
             auth={props.auth}
             errors={props.errors}
             header={<h2 className="font-semibold text-xl text-white leading-tight">Users</h2>}
-            navbarLinks={[{ to: '/users', name: 'All Users', active: true }, { to: '/users/create', name: 'Create Users', active: false }]}
+            navbarLinks={[{ to: '/users', name: 'All Users', active: true }, { to: '/users/create', name: 'Create User', active: false }]}
         >
             <div className={nameSearch ? 'w-full h-full py-5' : 'w-full h-screen py-5'}
             >

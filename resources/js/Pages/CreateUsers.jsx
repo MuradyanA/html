@@ -23,7 +23,7 @@ export default function CreateUsers(props) {
             auth={props.auth}
             errors={props.errors}
             header={<h2 className="font-semibold text-xl text-white leading-tight">Users</h2>}
-            navbarLinks={[{ to: '/users', name: 'All Users', active: false }, { to: '/users/create', name: 'Create Users', active: true }]}
+            navbarLinks={[{ to: '/users', name: 'All Users', active: false }, { to: '/users/create', name: 'Create User', active: true }]}
         >
             <div>
                 <form className='grid place-content-center w-full' onSubmit={submit}>
