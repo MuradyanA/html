@@ -16,6 +16,8 @@ use App\Models\Ticket;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use View;
+use Validator;
+
 
 
 class PaymentController extends Controller
@@ -23,15 +25,15 @@ class PaymentController extends Controller
     public function show(Request $request)
     {
 
-        $tickets =[
-            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid'=>'9djkgbhjsdfgbkl3-fdkgsl'],
-            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid'=>'9djkgbhjsdfgbkl3-fdkgsl'],
-            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid'=>'9djkgbhjsdfgbkl3-fdkgsl'],
-            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid'=>'9djkgbhjsdfgbkl3-fdkgsl'],
-            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid'=>'9djkgbhjsdfgbkl3-fdkgsl'],
-            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid'=>'9djkgbhjsdfgbkl3-fdkgsl']
+        $tickets = [
+            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid' => '9djkgbhjsdfgbkl3-fdkgsl'],
+            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid' => '9djkgbhjsdfgbkl3-fdkgsl'],
+            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid' => '9djkgbhjsdfgbkl3-fdkgsl'],
+            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid' => '9djkgbhjsdfgbkl3-fdkgsl'],
+            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid' => '9djkgbhjsdfgbkl3-fdkgsl'],
+            ['movieName' => 'Spider-Man', 'hour' => '15:00', 'date' => '31.04.2023', 'hall' => 'Blue', 'weekDay' => 'Monday', 'seat' => 5, 'seatType' => 'parterre', 'uuid' => '9djkgbhjsdfgbkl3-fdkgsl']
         ];
-            
+
         $dompdf = new Dompdf();
         $view = (string) View::make('tickets', ['tickets' => $tickets]);
         return $view;
@@ -39,13 +41,31 @@ class PaymentController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request);
-        $validated = $request->validate([
+        //  dd($request);
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'cardNumber' => ['required', 'int', new PaymentCard],
             'amount' => 'required|int',
         ]);
+        $validator->after(function ($validator) use ($request) {
+            $seanceDate = Carbon::now()->endOfWeek($request->seance['weekDay'])->format('Y-m-d');
+            $seats = Seat::select('seat')->whereIn('id', (session('seats')))->get()->pluck('seat');
+            $isSeatBought = Ticket::select('seat')->where([
+                ['is_used', 0],
+                ['seance_time', $request->seance['hour']],
+                ['seance_date', $seanceDate],
+            ])->whereIn('seat', $seats)->get()->pluck('seat');
+            if (count($isSeatBought) > 0) {
+                $validator->errors()->add(
+                    'hall_id', "Sorry, these seats " . implode(',', $isSeatBought->toArray()) . " have already been taken"
+                );
+            }
+        });
 
+        $validator->validate();
+        // dd($validator->errors());
+
+        $validated = $validator->validated();
         $payment = new Payment;
         $payment->name = $validated['name'];
         $payment->cardNumber = $validated['cardNumber'];
@@ -54,8 +74,8 @@ class PaymentController extends Controller
         $allTickets = [];
         $seance = Seance::find($request->session()->get('seance_id'));
         $moviename = DB::table('movies')->select('movieName')->where('id', '=', $seance->movie_id)->get();
-        
         $seats = Seat::select('seat', 'seatType')->whereIn('id', (session('seats')))->get();
+
         $data = [
             'movieName' => $moviename[0]->movieName,
             'hour' => $request->seance['hour'],
@@ -69,6 +89,7 @@ class PaymentController extends Controller
             $ticket->seance_date = Carbon::now()->endOfWeek($seance['weekday']);
             $ticket->payment_id = $payment->id;
             $ticket->hall_id = $seance['hall_id'];
+
             $ticket->seat = $seat['seat'];
             if ($seat['seatType'] == 'parterre') {
                 $ticket->ticket_price = $seance['parter_price'];
@@ -83,12 +104,9 @@ class PaymentController extends Controller
             $data['uuid'] = $ticket->id;
 
             array_push($allTickets, $data);
-            // $pdf = Pdf::loadView('tickets', ['tickets' => $data]);
-            // $content = $pdf->download()->getOriginalContent();
-            // return Pdf::loadFile(public_path().'/myfile.html')->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
         }
-        
-    
+
+
         $dompdf = new Dompdf();
         $view = (string) View::make('tickets', ['tickets' => $allTickets]);
         $dompdf->loadHtml($view);
@@ -99,6 +117,8 @@ class PaymentController extends Controller
         $url = Storage::url("tickets/tickets-$payment->id.pdf");
         $request->session()->put('paymentId', $payment->id);
         return to_route('welcome.index');
+
+
     }
 
 

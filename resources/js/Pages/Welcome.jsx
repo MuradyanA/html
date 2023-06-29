@@ -17,23 +17,20 @@ export default function Welcome(props) {
     const [reservedSeats, setReservedSeats] = useState([])
     let price = 0
     const { data, setData, post, errors } = useForm({
-        name: '',
-        cardNumber: '',
+        name: 'dfgs',
+        cardNumber: '4444444444444444',
         amount: '',
         seance: '',
         seats: '',
     })
-
-
+    
     const setSeance = (e) => {
-        console.log(e)
         router.visit(`/setSeance`, {
             method: 'post',
             data: { seance: e },
             preserveScroll: true,
             preserveState: true,
             onSuccess: (resp) => {
-                console.log('resp', resp)
                 setSelectedSeance(resp.props.chosenSeance)
                 setReservedSeats(resp.props.reservedSeats)
             },
@@ -101,6 +98,9 @@ export default function Welcome(props) {
                         scroll('successfullPayment')
                     }, 100);
                 },
+                onError: (e) =>{
+                    console.log(e)
+                }
             })
         }
     }

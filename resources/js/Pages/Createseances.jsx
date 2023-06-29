@@ -65,6 +65,8 @@ export default function Createseances(props) {
         <form className='mx-auto w-[90%] lg:w-[50%]  place-content-center mb-20' onSubmit={handleCreateSeance}>
           <div className='grid grid-cols-1 gap-5 md:grid-cols-2 place-content-center bg-[#111827] translate-y-10 p-5   drop-shadow-2xl rounded-xl'>
             <h3 className='text-3xl m-auto md:col-span-2 text-white mb-7'>New Seance</h3>
+            <hr className='mb-6 col-span-2' />
+
             <div className='col-span-1'>
               <p className='text-white'>Week Day</p>
               <ul>
@@ -96,6 +98,7 @@ export default function Createseances(props) {
               <input className='w-full h-10 rounded-md border-1 bg-[#0a101e] text-white border-[#2c3c5f]' value={data.starts} onChange={e => setData('starts', e.target.value)} type="date" />
             </div>
             <div className='col-span-1'>
+
               <p className='text-white'>Ends</p>
               <input className='w-full h-10 rounded-md border-1 bg-[#0a101e] text-white border-[#2c3c5f]' value={data.ends} onChange={e => setData('ends', e.target.value)} type="date" />
               <p className='text-white mt-5'>Halls</p>
