@@ -7,7 +7,6 @@ import { useState } from 'react';
 
 
 export default function Dashboard(props) {
-    console.log(props)
     let searchParam = new URLSearchParams(window.location.search).get('search')
     const [nameSearch, setNameSearch] = useState(searchParam ? searchParam : '')
     const filterPayments = debounce((keyword) => {

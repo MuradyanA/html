@@ -54,15 +54,17 @@ class PaymentController extends Controller
                 ['is_used', 0],
                 ['seance_time', $request->seance['hour']],
                 ['seance_date', $seanceDate],
+                ['hall_id', $request->seance['hall_id']]
             ])->whereIn('seat', $seats)->get()->pluck('seat');
             if (count($isSeatBought) > 0) {
+                $request->session()->forget('seats');
                 $validator->errors()->add(
-                    'hall_id', "Sorry, these seats " . implode(',', $isSeatBought->toArray()) . " have already been taken"
+                    'seat', "Sorry, the following seats are reserved: " . implode(',', $isSeatBought->toArray()) . " Refresh the page to see available seats."
                 );
             }
-        });
+        })->validate();
 
-        $validator->validate();
+        
         // dd($validator->errors());
 
         $validated = $validator->validated();
@@ -116,6 +118,8 @@ class PaymentController extends Controller
         Storage::put("tickets/tickets-$payment->id.pdf", $pdfOutput);
         $url = Storage::url("tickets/tickets-$payment->id.pdf");
         $request->session()->put('paymentId', $payment->id);
+        $request->session()->forget('seats');
+        $request->session()->forget('seance_id');
         return to_route('welcome.index');
 
 

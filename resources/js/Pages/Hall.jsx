@@ -14,7 +14,6 @@ export default function Hall({ hall, auth, errors, scroll, setSeats, selectedSea
         let checkSelectedSeat = selectedSeats.filter((e) => (
             elem.seat == e.seat
         ))
-        console.log('gdf', elem)
         if (checkSelectedSeat.length == 0) {
             setSeats([...selectedSeats, elem])
         } else {

@@ -12,6 +12,7 @@
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
+        "laravel/telescope": "^4.15",
         "laravel/tinker": "^2.8",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "tightenco/ziggy": "^1.0"
@@ -55,7 +56,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {

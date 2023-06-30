@@ -56,7 +56,6 @@ export const animationScenario2 = [
 ]
 
 export const animateElem = (elem, scenario) => {
-    console.log(elem)
     scenario.forEach(so => {
         setTimeout(() => {
             // alert("dfgnhdfg")

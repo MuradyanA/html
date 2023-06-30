@@ -32,7 +32,6 @@ export default function Createseances(props) {
     post('/seances', {
       preserveScroll: true,
       onSuccess: () => reset(),
-      onError: (e) => console.log(e),
     })
   }
 
@@ -47,7 +46,6 @@ export default function Createseances(props) {
         only: ['movies'],
         method: 'get',
         data: { search: keyword },
-        onError: (e) => console.log(e),
         preserveState: true
       })
   }, 800)

@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import dayOfWeek from '@/Tools/dayOfWeek';
 
 export default function Seances(props) {
-  console.log(props)
 
   const [date, setDate] = useState(props.currentDate ? props.currentDate : '')
 

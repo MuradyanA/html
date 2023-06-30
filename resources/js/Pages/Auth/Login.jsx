@@ -15,7 +15,6 @@ export default function Login(props, { status, canResetPassword }) {
         remember: '',
     });
     const { flash } = usePage().props
-    console.log(props)
     useEffect(() => {
         return () => {
             reset('password');

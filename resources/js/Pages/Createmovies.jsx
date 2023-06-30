@@ -18,7 +18,6 @@ export default function Createmovies(props) {
     post('/movies', {
       preserveScroll: true,
       onSuccess: () => reset(),
-      onError: (e) => console.log(e),
     })
   }
   return (

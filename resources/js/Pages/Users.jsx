@@ -8,7 +8,6 @@ import { Link, router } from '@inertiajs/react';
 
 
 export default function Users(props) {
-    console.log(props)
     let searchParam = new URLSearchParams(window.location.search).get('search')
     const [nameSearch, setNameSearch] = useState(searchParam ? searchParam : '')
     const [blockUser, setBlockUser] = useState(false)

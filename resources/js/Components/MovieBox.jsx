@@ -32,11 +32,9 @@ export default function MovieBox(props) {
 
     const editMovie = (e) => {
         e.preventDefault()
-        console.log(data)
         post(`/movies/${data.id}`, {
             preserveScroll: true,
             onError: (e) => {
-                console.log(e)
                 animateElem(errorWindow, animationScenario2)
             },
             onSuccess: setUpdateMovie(false)

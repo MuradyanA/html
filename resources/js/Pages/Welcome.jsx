@@ -86,10 +86,7 @@ export default function Welcome(props) {
             post(`/payment`, {
                 preserveScroll: true,
                 preserveState: true,
-                only: ['paymentId'],
-                // onError: e => {'err', console.log(e)},
                 onSuccess: e => {
-                    // console.log(e)
                     setSelectedSeance('')
                     setSelectedSeats('')
                     setPaymentForm(false)
@@ -98,9 +95,6 @@ export default function Welcome(props) {
                         scroll('successfullPayment')
                     }, 100);
                 },
-                onError: (e) =>{
-                    console.log(e)
-                }
             })
         }
     }
@@ -144,7 +138,7 @@ export default function Welcome(props) {
                 <div className="w-full h-full grid justify-center">
                     {selectedSeats.length > 0 && <button onClick={(e) => clalculateTotalPrice(e)} className="mt-6 mb-6 m-auto bg-blue-700 font-bold w-36 h-10 rounded-md font-sans text-gray-300 hover:bg-blue-900 duration-200">Buy Tickets</button>}
                     {paymentForm &&
-                        <form onSubmit={proccessPayment} id="paymentForm" className="w-96 h-full bg-gray-700 grid justify-center rounded-md">
+                        <form onSubmit={proccessPayment} id="paymentForm" className="w-96 h-full bg-gray-700 grid justify-items-center rounded-md">
                             <h2 className="text-gray-400 text-3xl mt-6 font-sans font-semibold">Payment Details</h2>
 
                             <hr className="w-80 mt-5 m-auto bg-gray-600 border-0 h-0.5 rounded-xl" />
@@ -156,7 +150,7 @@ export default function Welcome(props) {
                                 <input type="month" className="grid-cols-1 h-full w-44 rounded-md bg-gray-300 border-2 border-gray-300" minLength="16" name="ExpireDate" />
                                 <input type="number" className="grid-cols-1 w-32 h-fit ml-8 rounded-md bg-gray-300 border-2 font-bold border-gray-300" minLength="4" placeholder="CVV" />
                             </div>
-                            {Object.keys(errors).length > 0 && <div className={`${Object.keys(errors).length > 0 ? 'h-auto transition-all duration-1000 ease-in-out mt-5 p-2' : 'h-0 overflow-hidden'} grid place-content-center w-full bg-red-500 mt-4 py-5 rounded-md`}
+                            {Object.keys(errors).length > 0 && <div className={`${Object.keys(errors).length > 0 ? 'h-auto transition-all duration-1000 ease-in-out mt-5 p-2' : 'h-0 overflow-hidden'} grid place-content-center w-[90%] bg-red-500 mt-4 py-5 rounded-md`}
                             >
                                 {Object.keys(errors) && <div className='messageBox'>
                                     <ul>{Object.keys(errors).map((key) => (

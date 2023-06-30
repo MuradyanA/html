@@ -4,7 +4,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import React from 'react'
 
 export default function CreateUsers(props) {
-    // console.log(props)
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
