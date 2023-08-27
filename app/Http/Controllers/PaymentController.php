@@ -131,7 +131,7 @@ class PaymentController extends Controller
     {
         $fileName = "tickets/tickets-" . $request->session()->get('paymentId') . ".pdf";
         if (Storage::exists($fileName)) {
-            $request->session()->flush();
+            $request->session()->forget('paymentId');
             return Storage::download($fileName, 'tickets.pdf');
         }
     }

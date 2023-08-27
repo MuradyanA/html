@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 export default function Hall({ hall, auth, errors, scroll, setSeats, selectedSeats, reservedSeats }) {
 
+
     const removeItem = function (id) {
         setSeats(selectedSeats.filter((elem) => (
             elem.id != id
@@ -19,6 +20,8 @@ export default function Hall({ hall, auth, errors, scroll, setSeats, selectedSea
         } else {
             removeItem(elem.id)
         }
+
+
     }
 
     useEffect(() => {
@@ -26,18 +29,19 @@ export default function Hall({ hall, auth, errors, scroll, setSeats, selectedSea
     }, [selectedSeats])
 
     const getButtonClass = (elem) => {
-
-        const element = selectedSeats.find((e) => (
-            elem.id == e.id
-        ))
         if (reservedSeats.includes(elem.seat)) {
             return 'rounded-md p-1 m-1 mx-auto p-0 opacity-25'
         }
-        if (element) {
-            return 'rounded-md p-1 m-1 mx-auto p-0 bg-[#0AF025]'
-        } else {
-            return 'rounded-md p-1 m-1 mx-auto p-0'
+        if (selectedSeats) {
+            const element = selectedSeats.find((e) => (
+                elem.id == e.id
+            ))
+            if (element) {
+                return 'rounded-md p-1 m-1 mx-auto p-0 bg-[#0AF025]'
+            }
         }
+        return 'rounded-md p-1 m-1 mx-auto p-0'
+
     }
 
 
@@ -81,7 +85,7 @@ export default function Hall({ hall, auth, errors, scroll, setSeats, selectedSea
                     <path
                         fill="url(#radialGradient1680)"
                         fillOpacity="1"
-                        stroke={hall.id==2 ? '#0949E6' : "#F50048"}
+                        stroke={hall.id == 2 ? '#0949E6' : "#F50048"}
                         strokeDasharray="none"
                         strokeOpacity="1"
                         strokeWidth="2.268"

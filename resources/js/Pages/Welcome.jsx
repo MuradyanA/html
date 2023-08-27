@@ -15,10 +15,11 @@ export default function Welcome(props) {
     const [totalPrice, setTotalPrice] = useState(0)
     const [paymentSuccess, setPaymentSuccess] = useState(false)
     const [reservedSeats, setReservedSeats] = useState([])
+    const [downloadStarted, setDownloadStarted] = useState(false)
     let price = 0
     const { data, setData, post, errors } = useForm({
-        name: 'dfgs',
-        cardNumber: '4444444444444444',
+        name: '',
+        cardNumber: '',
         amount: '',
         seance: '',
         seats: '',
@@ -71,6 +72,10 @@ export default function Welcome(props) {
 
     }
 
+    const hideDownloadButton = () =>{
+
+    }
+
 
     const scroll = (targetId) => {
         const target = document.getElementById(targetId);
@@ -88,7 +93,7 @@ export default function Welcome(props) {
                 preserveState: true,
                 onSuccess: e => {
                     setSelectedSeance('')
-                    setSelectedSeats('')
+                    setSelectedSeats([])
                     setPaymentForm(false)
                     setPaymentSuccess(true)
                     setTimeout(() => {
@@ -167,7 +172,7 @@ export default function Welcome(props) {
 
                         </form>
                     }
-                    {paymentSuccess &&
+                    {paymentSuccess && !downloadStarted &&
                         <div
                             id="successfullPayment"
                             className="bg-blue-900 m-auto h-full p-3 text-center rounded-md border-2 border-blue-900">
@@ -178,7 +183,7 @@ export default function Welcome(props) {
                                 Payment successful. Click the button below to download the tickets.
                             </h4>
                             <div>
-                                <a href={`/downloadTicket`} className="bg-green-800 w-fit m-auto hover:bg-green-700 hover:border-green-700 text-center border-2  border-green-800 text-white font-bold py-2 px-4 rounded">Download Ticket</a>
+                                <a href={`/downloadTicket`} onClick={()=> setDownloadStarted(true)} className="bg-green-800 w-fit m-auto hover:bg-green-700 hover:border-green-700 text-center border-2  border-green-800 text-white font-bold py-2 px-4 rounded">Download Ticket</a>
                             </div>
                         </div>}
                 </div>
