@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -52,8 +53,8 @@ class RegisteredUserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->status = !$user->status;
-        $user->save();
+        $userService = new UserService();
+        $userService->changeDisabledState($user);
         return to_route('users.index');
     }
 
@@ -82,8 +83,8 @@ class RegisteredUserController extends Controller
 
     public function changeUserRole(Request $request, User $user)
     {
-        $user->isAdmin = !$user->isAdmin;
-        $user->save();
+        $userService = new UserService();
+        $userService->changeUserRole($user);
         return to_route('users.index');
     }
 

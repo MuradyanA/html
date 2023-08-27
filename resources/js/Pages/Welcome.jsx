@@ -182,7 +182,7 @@ export default function Welcome(props) {
                             </div>
                         </div>}
                 </div>
-            </div>
+            </div>1
             <Footer />
         </div>
     );

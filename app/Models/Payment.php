@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use PHPUnit\Framework\Attributes\Ticket;
+use App\Models\Ticket;
 
 class Payment extends Model
 {
     use HasFactory;
-    public function ticket()
+    public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
