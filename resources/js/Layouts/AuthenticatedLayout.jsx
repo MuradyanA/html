@@ -29,6 +29,9 @@ export default function Authenticated({ auth, header, children, navbarLinks }) {
                                 <NavLink href={route("users.index")} active={route().current('users.index')}>
                                     Users
                                 </NavLink>
+                                <NavLink href={route("chat.index")} active={route().current('chat.index')}>
+                                    Chat
+                                </NavLink>
                             </div>
                         </div>
 
@@ -109,6 +112,9 @@ export default function Authenticated({ auth, header, children, navbarLinks }) {
                         <ResponsiveNavLink href={route('users.index')} active={route().current('users.index')}>
                             Users
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('chat.index')} active={route().current('chat.index')}>
+                            Chat
+                        </ResponsiveNavLink>
                         
                     </div>
 
@@ -161,7 +167,7 @@ export default function Authenticated({ auth, header, children, navbarLinks }) {
                     </div>
                 </div>
                 }
-                <div className='col-span-11 sm:col-span-10 lg:col-span-10'>
+                <div className='col-span-12 sm:col-span-10 lg:col-span-10'>
                     {children}
                 </div>
             </main>

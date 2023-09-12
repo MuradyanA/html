@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\OnlineChatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SeatController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\SeanceController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ChatSessionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Models\Movie;
@@ -70,6 +73,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/movies/{id}', [MovieController::class, 'destroy'])->name('movies.destroy');
     Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
     Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show');
+    Route::get('/chat', [ChatSessionController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{session}', [ChatSessionController::class, 'show']);
+    Route::put('/chat/{sessionId}', [ChatSessionController::class, 'update'])->name('chat.update');
 });
 
 Route::middleware('auth')->group(function () {
@@ -80,6 +86,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/seances', [SeanceController::class, 'index'])->name('seances.index');
+
+Route::post('/onlineChat', [OnlineChatController::class, 'store'])->name('onlineChat.store');
+Route::post('/message', [MessageController::class, 'store'])->name('message.store');
+
 
 
 
